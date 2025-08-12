@@ -1,0 +1,13 @@
+{
+  "files.associations": {
+    "*.luau": "lua"
+  },
+  "runonsave.commands": [
+    {
+      "match": "src/.*\\.(luau|lua|json)$",
+      "cmd": "powershell -NoProfile -ExecutionPolicy Bypass -File ./.vscode/onSave.ps1"
+    }
+  ]
+}
+
+

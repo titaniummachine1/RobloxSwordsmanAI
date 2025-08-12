@@ -1,0 +1,13 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Rojo: serve",
+      "type": "shell",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -Command \"$r=Resolve-Path .; $exe=if(Test-Path ./.aftman/bin/rojo.exe){ './.aftman/bin/rojo.exe' } else { 'rojo' }; Start-Process $exe 'serve' -WorkingDirectory $r -WindowStyle Minimized\"",
+      "problemMatcher": []
+    }
+  ]
+}
+
+
