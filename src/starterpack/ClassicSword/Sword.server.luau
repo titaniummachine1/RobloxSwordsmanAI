@@ -154,8 +154,10 @@ local function Attack()
     Sounds.Slash:Play()
     loadAndPlay("R15Slash")
     attackActive = true
+    Handle.CanTouch = true
     task.delay(ATTACK_WINDOW, function()
         attackActive = false
+        Handle.CanTouch = false
     end)
 end
 
@@ -164,8 +166,10 @@ local function Lunge()
     Sounds.Lunge:Play()
     loadAndPlay("R15Lunge")
     attackActive = true
+    Handle.CanTouch = true
     task.delay(LUNGE_WINDOW, function()
         attackActive = false
+        Handle.CanTouch = false
     end)
     task.wait(0.2)
     Tool.Grip = Grips.Out
@@ -197,19 +201,23 @@ end
 local function Equipped(toolMouse)
     Character = Tool.Parent
     Player = Players:GetPlayerFromCharacter(Character)
-    Humanoid = Character and Character:FindFirstChildOfClass("Humanoid")
-    Torso = Character and (Character:FindFirstChild("Torso") or Character:FindFirstChild("HumanoidRootPart"))
+    Humanoid = Character and Character:FindFirstChildOfClass("Humanoid") or nil
+    Torso = Character and (Character:FindFirstChild("Torso") or Character:FindFirstChild("HumanoidRootPart")) or nil
     if not checkAlive() then return end
     ToolEquipped = true
     Sounds.Unsheath:Play()
     Mouse = toolMouse
     updateIcon()
+    attackActive = false
+    Handle.CanTouch = false
 end
 
 local function Unequipped()
     Tool.Grip = Grips.Up
     ToolEquipped = false
     Mouse = nil
+    attackActive = false
+    Handle.CanTouch = false
 end
 
 local function Changed(prop)
@@ -222,6 +230,7 @@ end
 Tool.Grip = Grips.Up
 Tool.Enabled = true
 ensureAnimations()
+Handle.CanTouch = false
 
 Tool.Activated:Connect(Activated)
 Tool.Equipped:Connect(Equipped)
