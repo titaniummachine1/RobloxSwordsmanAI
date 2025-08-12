@@ -1,35 +1,21 @@
 -- Simple hugger NPC that constantly walks toward the nearest player
 local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
 
 print("Server: starting simple hugger NPC")
 
-local function createDummyNPC()
-    local model = Instance.new("Model")
+local function createR15NPC()
+    -- Build a standard R15 character using a fresh HumanoidDescription
+    local description = Instance.new("HumanoidDescription")
+    local model = Players:CreateHumanoidModelFromDescription(description, Enum.HumanoidRigType.R15)
     model.Name = "HuggerNPC"
 
-    local root = Instance.new("Part")
-    root.Name = "HumanoidRootPart"
-    root.Size = Vector3.new(2, 2, 1)
-    root.Anchored = false
-    root.CanCollide = true
-    root.Position = Vector3.new(0, 5, 0)
-    root.Parent = model
+    -- Ensure a sensible spawn position
+    local root = model:FindFirstChild("HumanoidRootPart")
+    if root and root:IsA("BasePart") then
+        root.CFrame = CFrame.new(0, 5, 0)
+    end
 
-    local head = Instance.new("Part")
-    head.Name = "Head"
-    head.Size = Vector3.new(2, 1, 1)
-    head.Position = Vector3.new(0, 6.5, 0)
-    head.Parent = model
-
-    local humanoid = Instance.new("Humanoid")
-    humanoid.Parent = model
-
-    local weld = Instance.new("WeldConstraint")
-    weld.Part0 = root
-    weld.Part1 = head
-    weld.Parent = model
-
-    model.PrimaryPart = root
     model.Parent = workspace
     return model
 end
@@ -59,7 +45,7 @@ local function getNearestAlivePlayer(targetFrom)
     return nearestPlayer
 end
 
-local npc = createDummyNPC()
+local npc = createR15NPC()
 local npcHumanoid = getHumanoid(npc)
 local npcRoot = npc:FindFirstChild("HumanoidRootPart")
 

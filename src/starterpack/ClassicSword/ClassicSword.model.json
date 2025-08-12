@@ -1,0 +1,25 @@
+{
+  "$className": "Tool",
+  "Name": "ClassicSword",
+  "$properties": {
+    "RequiresHandle": true,
+    "Grip": [0, 0, -1.7, 0, 0, 1, 1, 0, 0, 0, 1, 0]
+  },
+  "Handle": {
+    "$className": "Part",
+    "Name": "Handle",
+    "$properties": {
+      "Size": [1, 1, 3],
+      "Anchored": false,
+      "CanCollide": false
+    },
+    "SwordSlash": { "$className": "Sound", "Name": "SwordSlash" },
+    "SwordLunge": { "$className": "Sound", "Name": "SwordLunge" },
+    "Unsheath": { "$className": "Sound", "Name": "Unsheath" }
+  },
+  "SwordScript": {
+    "$className": "Script",
+    "Name": "SwordScript",
+    "$path": "Sword.server.luau"
+  }
+}
