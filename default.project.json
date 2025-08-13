@@ -20,12 +20,39 @@
         "Client": {
           "$path": "src/client"
         }
+      },
+      "StarterCharacterScripts": {
+        "Character": {
+          "$className": "Folder",
+          "$path": "src/startercharacter"
+        }
       }
     },
 
     "StarterPack": {
       "Tools": {
         "$path": "src/starterpack"
+      }
+    },
+
+    "StarterGui": {
+      "Gui": {
+        "$className": "Folder",
+        "$path": "src/startergui"
+      }
+    },
+
+    "ReplicatedFirst": {
+      "First": {
+        "$className": "Folder",
+        "$path": "src/replicatedfirst"
+      }
+    },
+
+    "ServerStorage": {
+      "Storage": {
+        "$className": "Folder",
+        "$path": "src/serverstorage"
       }
     },
 

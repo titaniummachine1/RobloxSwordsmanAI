@@ -1,16 +1,32 @@
--- Simple hugger NPC that constantly walks toward the nearest player
+-- Idle R6 NPC with classic colors
 local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
 
-print("Server: starting simple hugger NPC")
+print("Server: spawn idle R6 NPC")
 
-local function createR15NPC()
-    -- Build a standard R15 character using a fresh HumanoidDescription
-    local description = Instance.new("HumanoidDescription")
-    local model = Players:CreateHumanoidModelFromDescription(description, Enum.HumanoidRigType.R15)
-    model.Name = "HuggerNPC"
+local function createR6NPC()
+    -- Build a classic R6 character and apply colors via BodyColors for compatibility
+    local desc = Instance.new("HumanoidDescription")
+    local ok, model = pcall(function()
+        return Players:CreateHumanoidModelFromDescription(desc, Enum.HumanoidRigType.R6)
+    end)
+    if not ok or not model then
+        return nil
+    end
+    model.Name = "NPC_R6"
 
-    -- Ensure a sensible spawn position
+    -- Ensure BodyColors exists and apply classic "noob" palette
+    local bodyColors = model:FindFirstChildOfClass("BodyColors")
+    if not bodyColors then
+        bodyColors = Instance.new("BodyColors")
+        bodyColors.Parent = model
+    end
+    bodyColors.HeadColor = BrickColor.new("Bright yellow")
+    bodyColors.LeftArmColor = BrickColor.new("Bright yellow")
+    bodyColors.RightArmColor = BrickColor.new("Bright yellow")
+    bodyColors.TorsoColor = BrickColor.new("Bright blue")
+    bodyColors.LeftLegColor = BrickColor.new("Bright green")
+    bodyColors.RightLegColor = BrickColor.new("Bright green")
+
     local root = model:FindFirstChild("HumanoidRootPart")
     if root and root:IsA("BasePart") then
         root.CFrame = CFrame.new(0, 5, 0)
@@ -27,42 +43,9 @@ local function getHumanoid(model)
     return model:FindFirstChildOfClass("Humanoid")
 end
 
-local function getNearestAlivePlayer(targetFrom)
-    local nearestPlayer = nil
-    local nearestDist = math.huge
-    for _, player in ipairs(Players:GetPlayers()) do
-        local character = player.Character
-        local humanoid = character and character:FindFirstChildOfClass("Humanoid")
-        local hrp = character and character:FindFirstChild("HumanoidRootPart")
-        if humanoid and humanoid.Health > 0 and hrp then
-            local dist = (hrp.Position - targetFrom).Magnitude
-            if dist < nearestDist then
-                nearestDist = dist
-                nearestPlayer = player
-            end
-        end
-    end
-    return nearestPlayer
-end
+-- Not used while idle; kept for future AI
+-- idle: no AI loop
 
-local npc = createR15NPC()
+local npc = createR6NPC()
 local npcHumanoid = getHumanoid(npc)
 local npcRoot = npc:FindFirstChild("HumanoidRootPart")
-
-task.spawn(function()
-    while npc.Parent and npcHumanoid and npcHumanoid.Health > 0 do
-        if not npcRoot then
-            break
-        end
-
-        local targetPlayer = getNearestAlivePlayer(npcRoot.Position)
-        if targetPlayer and targetPlayer.Character then
-            local targetRoot = targetPlayer.Character:FindFirstChild("HumanoidRootPart")
-            if targetRoot then
-                npcHumanoid:MoveTo(targetRoot.Position)
-            end
-        end
-
-        task.wait(0.2)
-    end
-end)

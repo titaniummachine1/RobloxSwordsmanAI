@@ -1,25 +1,40 @@
 {
-  "$className": "Tool",
-  "Name": "ClassicSword",
-  "$properties": {
+  "className": "Tool",
+  "properties": {
     "RequiresHandle": true,
     "Grip": [0, 0, -1.7, 0, 0, 1, 1, 0, 0, 0, 1, 0]
   },
-  "Handle": {
-    "$className": "Part",
-    "Name": "Handle",
-    "$properties": {
-      "Size": [1, 1, 3],
-      "Anchored": false,
-      "CanCollide": false
+  "children": [
+    {
+      "name": "Handle",
+      "className": "Part",
+      "properties": {
+        "Size": [1, 1, 3],
+        "Anchored": false,
+        "CanCollide": false
+      },
+      "children": [
+        {
+          "name": "SwordSlash",
+          "className": "Sound",
+          "properties": { "SoundId": "rbxassetid://12222216" }
+        },
+        {
+          "name": "SwordLunge",
+          "className": "Sound",
+          "properties": { "SoundId": "rbxassetid://12222225" }
+        },
+        {
+          "name": "Unsheath",
+          "className": "Sound",
+          "properties": { "SoundId": "rbxassetid://12222214" }
+        }
+      ]
     },
-    "SwordSlash": { "$className": "Sound", "Name": "SwordSlash" },
-    "SwordLunge": { "$className": "Sound", "Name": "SwordLunge" },
-    "Unsheath": { "$className": "Sound", "Name": "Unsheath" }
-  },
-  "SwordScript": {
-    "$className": "Script",
-    "Name": "SwordScript",
-    "$path": "Sword.server.luau"
-  }
+    {
+      "name": "SwordScript",
+      "className": "Script",
+      "source": { "file": "Sword.server.luau" }
+    }
+  ]
 }
